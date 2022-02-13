@@ -109,7 +109,7 @@ TEST(functional_tests, getDistFromOdometryNegative){
 //~
 TEST(functional_tests, calculateDeltaTetha0){
   float yawRate = 0;
-  uint64_t deltaTMs = 0;
+  uint32_t deltaTMs = 0;
   float deltaTetha = robot_position.calculateDeltaTetha(yawRate, deltaTMs);
 
   CHECK_EQUAL(0, deltaTetha);
@@ -121,7 +121,7 @@ TEST(functional_tests, calculateDeltaTetha0){
 //~
 TEST(functional_tests, calculateDeltaTetha21){
   float yawRate = 2;
-  uint64_t deltaTMs = 1;
+  uint32_t deltaTMs = 1;
   float deltaTetha = robot_position.calculateDeltaTetha(yawRate, deltaTMs);
 
   DOUBLES_EQUAL(0.002, deltaTetha, 0.000000001);
@@ -306,9 +306,9 @@ TEST(functional_tests, updateCoordsTest){
   DOUBLES_EQUAL(0, robot_position.coords[2], 0.000001);
 
   std::array<float, 4> odometry = {1, 1, 1, 1};
-  uint64_t odometryTSMS = 500;
+  uint32_t odometryTSMS = 500;
   float yawRate = 0;
-  uint64_t yawRateTSMS = 500;
+  uint32_t yawRateTSMS = 500;
 
   robot_position.updateCoords(odometry, odometryTSMS, yawRate, yawRateTSMS);
 
@@ -384,7 +384,7 @@ TEST(functional_tests, updateCoordsTest){
 //~
 TEST(robustness_tests, calculateDeltaTethaOver2pi){
   float yawRate = 42;
-  uint64_t deltaTMs = 1000;
+  uint32_t deltaTMs = 1000;
   float deltaTetha = robot_position.calculateDeltaTetha(yawRate, deltaTMs);
 
   DOUBLES_EQUAL(4.30088815692, deltaTetha, 0.000001);

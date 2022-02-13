@@ -135,4 +135,4 @@ And our new absolute coordinates are:
 ## Bibliography
 
 [^1]: Wikipedia : https://en.wikipedia.org/wiki/Dead_reckoning
-[^2]: A good tutorial : https://www.youtube.com/watch?v=LrsTBWf6Wsc&t=1554s
+[^2]: A good explanation : https://www.youtube.com/watch?v=LrsTBWf6Wsc&t=1554s
