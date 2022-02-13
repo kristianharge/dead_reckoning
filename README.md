@@ -70,12 +70,14 @@ In this section, we will cover how the odometry and yaw rate can be used to extr
 
 First of all, we simplified the problem by taking in account only the two rear wheels because the front ones does not have driving capacity.
 
-We can imagine the robot trajectory as a sum of small curved segments as in the following images:
+The following image shows an example that could be a CarriRo movement trajectory.
 
 <p align="center">
   <img src="./Images/real_robot_movement.png" />
-  <figcaption align = "center"><b>Fig.5 CarriRo real robot movement representation</b></figcaption>
 </p>
+<figcaption align="middle"><b>Fig.5 CarriRo real robot movement representation</b></figcaption>
+
+This trajectory can be decomposed in small curved segments as in the following image:
 
 <p align="center">
   <img src="./Images/segmented_robot_movement.png" />
@@ -86,7 +88,7 @@ If we focus on a single segment, we can extract the yaw angle and robot shift:
 
 <p align="center">
   <img src="./Images/shift_extraction.png" />
-  <figcaption align = "center"><b>Fig.7 CarriRo segment data</b></figcaption>
+  <figcaption><b>Fig.7 CarriRo segment data</b></figcaption>
 </p>
 
 From the representation of our robot, we can extract the following set equations:
@@ -106,7 +108,8 @@ To simplify things, we imagine that the robot does a slight rotation on the spot
 
 <p align="center">
   <img src="./Images/robot_shift_absolute_coordinates.png" />
-  <figcaption align = "center"><b>Fig.8 Robot shift to absolute coordinates</b></figcaption>
+  <br>
+  <b>Fig.8 Robot shift to absolute coordinates</b>
 </p>
 
 **Legend :**
