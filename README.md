@@ -57,17 +57,82 @@ We will use an orthonormal coordinate system. Where at initialization, *CarriRo 
   <figcaption align = "center"><b>Fig.4 CarriRo inital position in the plane</b></figcaption>
 </p>
 
-The angle $\tetha$ is the angle between the direction of the robot and the x axis.
+The angle &#952; is the angle between the direction of the robot and the x axis.
 
 So at the begining, our coordinates are the following ones :
-- $x = 0$
-- $y = 0$
-- $\tetha = 0$
+- x = 0
+- y = 0
+- &#952; = 0
 
 ### From the physics to the maths
 
-In this section, we will cover how the odometry and yaw rate can be used to extract the absolute robot position.
+In this section, we will cover how the odometry and yaw rate can be used to extract the absolute robot position.[^2]
+
+First of all, we simplified the problem by taking in account only the two rear wheels because the front ones does not have driving capacity.
+
+We can imagine the robot trajectory as a sum of small curved segments as in the following images:
+
+<p align="center">
+  <img src="./Images/real_robot_movement.png" />
+  <figcaption align = "center"><b>Fig.5 CarriRo real robot movement representation</b></figcaption>
+</p>
+
+<p align="center">
+  <img src="./Images/segmented_robot_movement.png" />
+  <figcaption align = "center"><b>Fig.6 CarriRo segmented robot movement representation</b></figcaption>
+</p>
+
+If we focus on a single segment, we can extract the yaw angle and robot shift:
+
+<p align="center">
+  <img src="./Images/shift_extraction.png" />
+  <figcaption align = "center"><b>Fig.7 CarriRo segment data</b></figcaption>
+</p>
+
+From the representation of our robot, we can extract the following set equations:
+
+- d<sub>R</sub> = (R + 2*R<sub>W</sub>)*&Delta;&theta;
+- d<sub>L</sub> = R*&Delta;&theta;
+- d = (R + R<sub>W</sub>)*&Delta;&theta;
+
+With some basic maths, we get to the following equation:
+- d = (d<sub>R</sub> + d<sub>L</sub>)/2
+
+### From relative movement to absolute coordinates
+
+In the last section, we just extracted the robot movement regarding the last segment, but now, we need to use this in order to know where our robot is in the absolute coordinates system. In order to do that, we need to convert the yaw angle and the position shift to an x and y coordinates and to an absolute angle between the x axis and the robot direction.
+
+To simplify things, we imagine that the robot does a slight rotation on the spot before going straight. This allows us to use the d distance as if it was straight forward:
+
+<p align="center">
+  <img src="./Images/robot_shift_absolute_coordinates.png" />
+  <figcaption align = "center"><b>Fig.8 Robot shift to absolute coordinates</b></figcaption>
+</p>
+
+**Legend :**
+- y: y axis
+- x: x axis
+- (x<sub>t-1</sub>, y<sub>t-1</sub>): last scan coordinates
+- (x<sub>t</sub>, y<sub>t</sub>): new scan coordinates
+- &Delta;&theta;: yaw angle between last direction and new direction
+- &Delta;x: variation on x axis
+- &Delta;y: variation on y axis
+- &theta;<sub>t</sub>: absolute angle between x axis and the robot direction
+- &theta;<sub>t-1</sub>: absolute angle between x axis and the robot direction in the last scan
+
+To update our absolute angle, we take the yaw angle and add it to the last angle:
+- &theta;<sub>t</sub> = &Delta;&theta; + &theta;<sub>t-1</sub>
+
+With some trigonometry, we can extract &Delta;x and &Delta;y:
+- &Delta;x = d cos(&theta;<sub>t</sub>)
+- &Delta;y = d sin(&theta;<sub>t</sub>)
+
+And our new absolute coordinates are:
+- x<sub>t</sub> = x<sub>t-1</sub> + &Delta;x
+- y<sub>t</sub> = y<sub>t-1</sub> + &Delta;y
+- &theta;<sub>t</sub>
 
 ## Bibliography
 
 [^1]: Wikipedia : https://en.wikipedia.org/wiki/Dead_reckoning
+[^2]: A good tutorial : https://www.youtube.com/watch?v=LrsTBWf6Wsc&t=1554s
