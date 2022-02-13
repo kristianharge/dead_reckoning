@@ -21,7 +21,8 @@ In our case, we consider the CarriRo AD as being the robot in wich we will imple
 
 <p align="center">
   <img src="./Images/CarriRo.jpeg" />
-  <figcaption align = "center"><b>Fig.1 CarriRo Image</b></figcaption>
+  <br>
+  <b>Fig.1 CarriRo Image</b>
 </p>
 
 As far as I know, the idea behind this robot is to have an autonomous moving cart that can handle heavy loads transportation. A dead reckoning system would give to this robot, the capability of knowing its current position in a 2D plane from an initially known position. That is an essential part when comming to autonomous mooving robots.
@@ -44,17 +45,20 @@ We will use an orthonormal coordinate system. Where at initialization, *CarriRo 
 
 <p align="center">
   <img src="./Images/coordinates.png" />
-  <figcaption align = "center"><b>Fig.2 Coordinates system</b></figcaption>
+  <br>
+  <b>Fig.2 Coordinates system</b>
 </p>
 
 <p align="center">
   <img src="./Images/CarriRo_mockup.png" />
-  <figcaption align = "center"><b>Fig.3 CarriRo representative illustration</b></figcaption>
+  <br>
+  <b>Fig.3 CarriRo representative illustration</b>
 </p>
 
 <p align="center">
   <img src="./Images/CarriRo_initial_position.png" />
-  <figcaption align = "center"><b>Fig.4 CarriRo inital position in the plane</b></figcaption>
+  <br>
+  <b>Fig.4 CarriRo inital position in the plane</b>
 </p>
 
 The angle &#952; is the angle between the direction of the robot and the x axis.
@@ -74,21 +78,24 @@ The following image shows an example that could be a CarriRo movement trajectory
 
 <p align="center">
   <img src="./Images/real_robot_movement.png" />
+  <br>
+  <b>Fig.5 CarriRo real robot movement representation</b>
 </p>
-<figcaption align="middle"><b>Fig.5 CarriRo real robot movement representation</b></figcaption>
 
 This trajectory can be decomposed in small curved segments as in the following image:
 
 <p align="center">
   <img src="./Images/segmented_robot_movement.png" />
-  <figcaption align = "center"><b>Fig.6 CarriRo segmented robot movement representation</b></figcaption>
+  <br>
+  <b>Fig.6 CarriRo segmented robot movement representation</b>
 </p>
 
 If we focus on a single segment, we can extract the yaw angle and robot shift:
 
 <p align="center">
   <img src="./Images/shift_extraction.png" />
-  <figcaption><b>Fig.7 CarriRo segment data</b></figcaption>
+  <br>
+  <b>Fig.7 CarriRo segment data</b>
 </p>
 
 From the representation of our robot, we can extract the following set equations:
@@ -134,6 +141,30 @@ And our new absolute coordinates are:
 - x<sub>t</sub> = x<sub>t-1</sub> + &Delta;x
 - y<sub>t</sub> = y<sub>t-1</sub> + &Delta;y
 - &theta;<sub>t</sub>
+
+## Functionnal overview of the code
+
+### Mockup of the gyrometer and odometry acquisition
+
+[talk about the suppositions on odometry returns and yaw rate details]
+
+### How is built the library and how to use it
+
+## Build and test
+
+### Requirements
+
+### Build and test commands
+
+[talk about the debug flag and how to remove]
+
+## Room for improvements
+
+### Thread safety
+
+### Global positionning system and Kalman filter
+
+[if speed component not added, add it to it]
 
 ## Bibliography
 
