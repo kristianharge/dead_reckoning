@@ -85,6 +85,11 @@ class robotPosition{
 
   private:
 
+    //this is the last time in miliseconds when we updated the yaw angle
+    uint64_t lastAngleUpdateMS = 0;
+    //this is the last time in miliseconds when we updated the x and y coordinates
+    uint64_t lastXYUpdateMS = 0;
+
     //~ Function: updateCoords
     //~ ----------------------------
     //~ From the odometry and yaw rate data, it updates the yaw angle,

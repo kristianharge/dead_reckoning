@@ -74,10 +74,14 @@ void robotPosition::updateAngleLoop(int gyroFreqHz){
 
   //loop in which we refresh the angle via the gyrometer data
   while(1){
+    //get the yaw rate and its timestamp
     ret = gyrometerAcq(yawRate, timestamp);
     //if the acquisition was sucessful, we treat the information, if not, retry
     if (ret > 0){
-      updateAngle(yawRate, timestamp);
+      //update the yaw angle with the elapsed time between two updates
+      updateAngle(yawRate, timestamp - lastAngleUpdateMS);
+      //update the last time we updaed the yaw angle
+      lastAngleUpdateMS = timestamp;
       auto end = high_resolution_clock::now();
       auto timeElapsed = duration_cast<milliseconds>(end - start);
       std::this_thread::sleep_for(std::chrono::milliseconds(1000/gyroFreqHz - timeElapsed.count()));
@@ -113,10 +117,14 @@ void robotPosition::updateXYLoop(int odometryFreqHz){
 
   //loop in which we refresh the x and y position via the odometry data
   while(1){
+    //get the odometry and its timestamp
     ret = odometryAcq(odometry, timestamp);
     //if the acquisition was sucessful, we treat the information, if not, retry
     if (ret > 0){
-      updateXY(odometry, timestamp);
+      //update the x and y coordinates with the elapsed time between two updates
+      updateXY(odometry, timestamp - lastXYUpdateMS);
+      //update the last time we updaed the X and Y coordiates
+      lastXYUpdateMS = timestamp;
       auto end = high_resolution_clock::now();
       auto timeElapsed = duration_cast<milliseconds>(end - start);
       std::this_thread::sleep_for(std::chrono::milliseconds(1000/odometryFreqHz - timeElapsed.count()));
