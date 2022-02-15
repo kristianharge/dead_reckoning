@@ -146,17 +146,56 @@ And our new absolute coordinates are:
 
 ### Mockup of the gyrometer and odometry acquisition
 
-[talk about the suppositions on odometry returns and yaw rate details]
+In order to simulate the odometry and the yaw rate acquisition functions, I made a mockup library that had two functions: one for odometry and one for the gyrometer.
+```c++
+int gyrometerAcq(float &yawRate, uint32_t &timestamp);
+int odometryAcq(std::array<float, 4> &odometry, uint32_t &timestamp);
+```
+
+*Note : For simplicity, we supposed that this library returns the odometry values between the last acq and the new one.*
+
+The output values are actually given by reference and the returned value corresponds to the success or fail of the function.
 
 ### How is built the library and how to use it
 
-## Build and test
+The library consists in one class `robotPosition` that contains three public methods, eight private ones and one public attribute. To use this library, you first need to create an instance of the class. Then three functions can be used, one is for yaw angle update loop, the second one is for poisiton update loop and the last one is to launch a multi threaded loop where you can choose the refresh rate of the yaw angle and odometry. The attribute is the global position of the robot in (x,y,&theta;) coordinates:
+```c++
+class robotPosition{
+  public:
+    std::array<float, COORDS_SIZE> coords = {0, 0, 0};
+
+    robotPosition(void);
+    ~robotPosition(void);
+
+    void updateCoordsThreads(int gyroFreqHz, int odometryFreqHz);
+
+    void updateAngleLoop(int gyroFreqHz);
+
+    void updateXYLoop(int odometryFreqHz);
+    ...
+```
+
+## Build and tests
 
 ### Requirements
 
+Before building and testing your code, please make sure to have the following installs:
+- g++
+- gdb
+- CppUTest[^3]
+
+And do the following configurations:
+- Replace the `CPPUTEST_HOME` value in the make file with your absolute path to it
+
 ### Build and test commands
 
-[talk about the debug flag and how to remove]
+We have made three kind of builds : a test build, an executable build and a library build.
+In order to build them, you just need to go to `Dead_reckoning_system` and type:
+- `make tests` for the unitary tests
+- `make dead_reckoning` for the executable
+- `make library` for the static library
+
+*Note: in the makefile there is a debug flag usefull to print some debug information. You can remove it for release.*
 
 ## Room for improvements
 
@@ -168,5 +207,6 @@ And our new absolute coordinates are:
 
 ## Bibliography
 
-[^1]: Wikipedia : https://en.wikipedia.org/wiki/Dead_reckoning
-[^2]: A good explanation : https://www.youtube.com/watch?v=LrsTBWf6Wsc&t=1554s
+[^1]: Wikipedia: https://en.wikipedia.org/wiki/Dead_reckoning
+[^2]: A good explanation: https://www.youtube.com/watch?v=LrsTBWf6Wsc&t=1554s
+[^3]: Can be downloaded here: http://cpputest.github.io/
